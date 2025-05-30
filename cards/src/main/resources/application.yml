@@ -17,7 +17,7 @@ spring:
     hibernate:
       database-platform: org.hibernate.dialect.H2Dialect
       ddl-auto: update
-      show-sql: true
+    show-sql: true
   config:
     import: "optional:configserver:http://localhost:8071"
 

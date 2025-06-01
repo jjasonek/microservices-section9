@@ -1,6 +1,7 @@
 # Udemy Course Microservices with Spring Boot, Docker, Kubernetes Section9
 https://www.udemy.com/course/master-microservices-with-spring-docker-kubernetes/
 ## spring version: 3.4.5
+## gatewayservice version: 3.5.0
 ## Java 21
 
 

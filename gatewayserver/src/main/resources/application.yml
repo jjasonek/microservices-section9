@@ -5,9 +5,14 @@ spring:
     import: "optional:configserver:http://localhost:8071"
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true   # replace for spring.cloud.gateway.discovery.locator.enabled
+#      discovery:
+#        locator:
+#          enabled: true
 
 management:
   endpoints:
@@ -16,7 +21,8 @@ management:
         include: "*"
   endpoint:
     gateway:
-      unrestricted: true  # enabled:true is deprecated
+      access: unrestricted
+#      enabled: true
 
   info:
     env:

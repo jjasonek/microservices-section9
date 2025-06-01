@@ -45,3 +45,6 @@ http://localhost:8072/actuator/gateway/routes
 
 ### Example invoking an service:
 POST http://localhost:8072/ACCOUNTS/api/create
+
+### Example invoking an service:
+POST http://localhost:8072/eazybank/accounts/api/create

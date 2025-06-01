@@ -9,7 +9,7 @@ spring:
         webflux:
           discovery:
             locator:
-              enabled: true   # replace for spring.cloud.gateway.discovery.locator.enabled
+              enabled: false   # replace for spring.cloud.gateway.discovery.locator.enabled
               lowerCaseServiceId: true
 #      discovery:
 #        locator:

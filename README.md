@@ -84,3 +84,38 @@ Hibernate: select l1_0.loan_id,l1_0.amount_paid,l1_0.created_at,l1_0.created_by,
 2025-06-18T14:17:13.712+02:00 DEBUG 24664 --- [cards] [nio-9000-exec-2] c.e.cards.controller.CardsController     : eazybank-correlation-id found: 92d6acec-8833-4e38-a381-2c51fa710786
 Hibernate: select c1_0.card_id,c1_0.amount_used,c1_0.available_amount,c1_0.card_number,c1_0.card_type,c1_0.created_at,c1_0.created_by,c1_0.mobile_number,c1_0.total_limit,c1_0.updated_at,c1_0.updated_by from cards c1_0 where c1_0.mobile_number=?
 2025-06-18T14:21:50.835+02:00  INFO 24664 --- [cards] [rap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+
+
+## Docker Images and Docker Compose
+
+### for all microservices we call following to generate docker images:
+mvn compile jib:dockerBuild
+
+docker images | grep s9
+jjasonek/eurekaserver                      s9        f59a03a7eb30   55 years ago    344MB
+jjasonek/gatewayserver                     s9        52fa96c13f6c   55 years ago    338MB
+jjasonek/loans                             s9        57bdb8d2f3d9   55 years ago    374MB
+jjasonek/cards                             s9        af786fbc14c8   55 years ago    374MB
+jjasonek/configserver                      s9        755f84749b36   55 years ago    331MB
+jjasonek/accounts                          s9        5cb2437feeda   55 years ago    375MB
+
+docker image ls --filter=reference="jjasonek/*:s9"
+REPOSITORY               TAG       IMAGE ID       CREATED        SIZE
+jjasonek/loans           s9        57bdb8d2f3d9   55 years ago   374MB
+jjasonek/configserver    s9        755f84749b36   55 years ago   331MB
+jjasonek/eurekaserver    s9        f59a03a7eb30   55 years ago   344MB
+jjasonek/gatewayserver   s9        52fa96c13f6c   55 years ago   338MB
+jjasonek/accounts        s9        5cb2437feeda   55 years ago   375MB
+jjasonek/cards           s9        af786fbc14c8   55 years ago   374MB
+
+### push images to docker hub:
+docker image push docker.io/jjasonek/accounts:s9
+docker image push docker.io/jjasonek/loans:s9
+docker image push docker.io/jjasonek/cards:s9
+docker image push docker.io/jjasonek/configserver:s9
+docker image push docker.io/jjasonek/eurekaserver:s9
+docker image push docker.io/jjasonek/gatewayserver:s9
+
+### run docker compose
+docker compose up -d
+docker compose down

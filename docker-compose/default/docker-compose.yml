@@ -39,6 +39,12 @@ services:
       - "8080:8080"
     environment:
       SPRING_APPLICATION_NAME: "accounts"   # This is here because of bug in Spring Cloud Config Server version.
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s  # Wait for 10 seconds before checking the health of the container
     extends:
       file: common-config.yml
       service: microservice-eureka-config
@@ -50,6 +56,12 @@ services:
       - "8090:8090"
     environment:
       SPRING_APPLICATION_NAME: "loans"   # This is here because of bug in Spring Cloud Config Server version.
+    healthcheck:
+      test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s  # Wait for 10 seconds before checking the health of the container
     extends:
       file: common-config.yml
       service: microservice-eureka-config
@@ -61,6 +73,30 @@ services:
       - "9000:9000"
     environment:
       SPRING_APPLICATION_NAME: "cards"   # This is here because of bug in Spring Cloud Config Server version.
+    healthcheck:
+      test: "curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s  # Wait for 10 seconds before checking the health of the container
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  gatewayserver:
+    image: "jjasonek/gatewayserver:s9"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"   # This is here because of bug in Spring Cloud Config Server version.
     extends:
       file: common-config.yml
       service: microservice-eureka-config

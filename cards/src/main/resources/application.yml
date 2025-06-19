@@ -21,14 +21,22 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8071"
 
-management:
+management:   # to see in browser http://localhost:9000/actuator
   endpoints:
     web:
       exposure:
         include: "*"
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
   endpoint:
     shutdown:
       enabled: true
+    health:
+      probes:
+        enabled: trues
   info:
     env:
       enabled: true

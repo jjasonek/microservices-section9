@@ -21,14 +21,22 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8071"
 
-management:
+management:   # to see in browser http://localhost:8080/actuator
   endpoints:
     web:
       exposure:
         include: "*"
+  health:
+    readinessstate:
+      enabled: true
+    livenessstate:
+      enabled: true
   endpoint:
     shutdown:
       enabled: true  # Enabled is deprecated. It is replaced by restricted.
+    health:
+      probes:
+        enabled: true
   info:
     env:
       enabled: true

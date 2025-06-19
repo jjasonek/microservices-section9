@@ -21,7 +21,7 @@ spring:
 #          search-locations: "classpath:/config"
 #          search-locations: "file:///C://Training//Microservices//section6//v2-spring-cloud-config//configserver//src//main//resources//config"
 
-management:
+management:   # to see in browser http://localhost:8071/actuator
   endpoints:
     web:
       exposure:
